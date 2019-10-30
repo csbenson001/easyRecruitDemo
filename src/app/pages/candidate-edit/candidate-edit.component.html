@@ -1,0 +1,128 @@
+<!-- TITLE -->
+<div class="mb-40 mt-40">
+    <h1>Candidate Edit</h1>
+</div>
+<div class="card mb-40">
+    <div class="card-header">
+        <i class="fa fa-edit"></i> Edit
+    </div>
+    <div class="card-body">
+        <form #editForm="ngForm" [ngClass]="{'was-validated': formValid!=null}">
+            <div class="row justify-content-md-center">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label for="AppointmentDate">AppointmentDate</label>
+                        <input type="date" class="form-control" id="AppointmentDate" [(ngModel)]="item.AppointmentDate" name="AppointmentDate" #AppointmentDate="ngModel" >
+                    </div>
+                    <div class="form-group">
+                        <label for="AppointmentId">AppointmentId</label>
+                        <input type="text" class="form-control" id="AppointmentId" [(ngModel)]="item.AppointmentId" name="AppointmentId" #AppointmentId="ngModel" >
+                    </div>
+                    <div class="form-group">
+                        <label for="AppointmentResults">AppointmentResults</label>
+                        <input type="text" class="form-control" id="AppointmentResults" [(ngModel)]="item.AppointmentResults" name="AppointmentResults" #AppointmentResults="ngModel" >
+                    </div>
+                    <div class="form-group">
+                        <label for="AppointmentStatus">AppointmentStatus</label>
+                        <input type="text" class="form-control" id="AppointmentStatus" [(ngModel)]="item.AppointmentStatus" name="AppointmentStatus" #AppointmentStatus="ngModel" >
+                    </div>
+                    <div class="form-group">
+                        <label for="ConversionFrom">ConversionFrom</label>
+                        <input type="text" class="form-control" id="ConversionFrom" [(ngModel)]="item.ConversionFrom" name="ConversionFrom" #ConversionFrom="ngModel" >
+                    </div>
+                    <div class="form-group">
+                        <label for="DeferReason">DeferReason</label>
+                        <input type="text" class="form-control" id="DeferReason" [(ngModel)]="item.DeferReason" name="DeferReason" #DeferReason="ngModel" >
+                    </div>
+                    <div class="form-group">
+                        <label for="DeferredDate">DeferredDate</label>
+                        <input type="date" class="form-control" id="DeferredDate" [(ngModel)]="item.DeferredDate" name="DeferredDate" #DeferredDate="ngModel" >
+                    </div>
+                    <div class="form-group">
+                        <label for="Email">Email</label>
+                        <input type="text" class="form-control" id="Email" [(ngModel)]="item.Email" name="Email" #Email="ngModel" >
+                    </div>
+                    <div class="form-group">
+                        <label for="FirstName">FirstName</label>
+                        <input type="text" class="form-control" id="FirstName" [(ngModel)]="item.FirstName" name="FirstName" #FirstName="ngModel" >
+                    </div>
+                    <div class="form-group">
+                        <label for="HireDate">HireDate</label>
+                        <input type="date" class="form-control" id="HireDate" [(ngModel)]="item.HireDate" name="HireDate" #HireDate="ngModel" >
+                    </div>
+                    <div class="form-group ">
+                        <label for="Hired">Hired</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="LastName">LastName</label>
+                        <input type="text" class="form-control" id="LastName" [(ngModel)]="item.LastName" name="LastName" #LastName="ngModel" >
+                    </div>
+                    <div class="form-group">
+                        <label for="MiddleName">MiddleName</label>
+                        <input type="text" class="form-control" id="MiddleName" [(ngModel)]="item.MiddleName" name="MiddleName" #MiddleName="ngModel" >
+                    </div>
+                    <div class="form-group">
+                        <label for="Recruiter">Recruiter</label>
+                        <input type="text" class="form-control" id="Recruiter" [(ngModel)]="item.Recruiter" name="Recruiter" #Recruiter="ngModel" >
+                    </div>
+                    <div class="form-group">
+                        <label for="ReferredBy">ReferredBy</label>
+                        <input type="text" class="form-control" id="ReferredBy" [(ngModel)]="item.ReferredBy" name="ReferredBy" #ReferredBy="ngModel" >
+                    </div>
+                    <div class="form-group">
+                        <label for="SAPUser">SAPUser</label>
+                        <input type="text" class="form-control" id="SAPUser" [(ngModel)]="item.SAPUser" name="SAPUser" #SAPUser="ngModel" >
+                    </div>
+                    <!-- RELATIONS -->
+                    <h2 class="mb-20">Relations</h2>
+
+                    <div class="pb-30">
+                        <div class="mb-20">
+                            <label>Positions</label>
+
+                            <span class="dropdown ml-20">
+                                <button class="btn btn-dropdown dropdown-toggle" type="button" id="dropdownMenuButtonPositions" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                    Add
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonPositions">
+                                    <button class="dropdown-item" *ngFor="let item of listPositions" [class.disabled]="containPosition(item._id)" (click)="$event.preventDefault(); containPosition(item._id) || addPosition(item._id)">{{item._id}}
+                                    </button>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="mb-40">
+                            <ul class="list-group">
+                                <li class="list-group-item" *ngIf="!item.positions || item.positions.length == 0">No item found</li>
+                                <li class="list-group-item" *ngFor="let obj of item.positions; let i = index">
+                                    {{obj}}
+
+                                    <button class="btn btn-danger pull-right" type="button" (click)="removePosition(i)">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h2 *ngIf="externalCandidateNotification[0] || externalPosition[0]">External Relations</h2>
+        
+                        <h3 *ngIf="externalCandidateNotification[0]">CandidateNotification</h3>
+                        <ul class="list-group">
+                        <li class="list-group-item" *ngFor="let item of externalCandidateNotification">{{item._id}}</li>
+                        </ul>
+                        <h3 *ngIf="externalPosition[0]">Position</h3>
+                        <ul class="list-group">
+                        <li class="list-group-item" *ngFor="let item of externalPosition">{{item._id}}</li>
+                        </ul>
+
+                    <!-- BUTTON BAR -->
+                    <div class="mt-40">
+                        <button class="btn btn-primary pull-right" (click)="save(editForm.valid, item)">Save</button>
+                        <button class="btn btn-secondary pull-right mr-2" (click)="goBack()">Back To List</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

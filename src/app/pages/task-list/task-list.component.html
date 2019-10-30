@@ -1,0 +1,135 @@
+<!-- TITLE -->
+<div class="mb-40 mt-40">
+    <h1>Task List</h1>
+</div>
+
+<!-- SEARCH FORM -->
+<div class="card">
+
+    <div class="card-header">
+        <i class="fa fa-search"></i> Search
+    </div>
+    <div class="card-body">
+        <form #searchForm="ngForm">
+            <div class="row justify-content-md-center">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label for="AssignedTo">AssignedTo</label>
+                        <input type="text" class="form-control" id="AssignedTo" [(ngModel)]="search.AssignedTo" name="AssignedTo" #AssignedTo="ngModel">
+                    </div>
+                    <div class="form-group">
+                        <label for="Comments">Comments</label>
+                        <input type="text" class="form-control" id="Comments" [(ngModel)]="search.Comments" name="Comments" #Comments="ngModel">
+                    </div>
+                    <div class="form-group">
+                        <label for="DaysAllowed">DaysAllowed</label>
+                        <input type="number" class="form-control" id="DaysAllowed" [(ngModel)]="search.DaysAllowed" name="DaysAllowed" #DaysAllowed="ngModel">
+                    </div>
+                    <div class="form-group">
+                        <label for="DueDate">DueDate</label>
+                        <input type="date" class="form-control" id="DueDate" [(ngModel)]="search.DueDate" name="DueDate" #DueDate="ngModel">
+                    </div>
+                    <div class="form-group">
+                        <label for="Status">Status</label>
+                        <input type="text" class="form-control" id="Status" [(ngModel)]="search.Status" name="Status" #Status="ngModel">
+                    </div>
+                    <div class="form-group">
+                        <label for="TaskDescription">TaskDescription</label>
+                        <input type="text" class="form-control" id="TaskDescription" [(ngModel)]="search.TaskDescription" name="TaskDescription" #TaskDescription="ngModel">
+                    </div>
+                    <div class="form-group">
+                        <label for="TaskLink">TaskLink</label>
+                        <input type="text" class="form-control" id="TaskLink" [(ngModel)]="search.TaskLink" name="TaskLink" #TaskLink="ngModel">
+                    </div>
+                    <div class="form-group">
+                        <label for="TaskName">TaskName</label>
+                        <input type="text" class="form-control" id="TaskName" [(ngModel)]="search.TaskName" name="TaskName" #TaskName="ngModel">
+                    </div>
+                    <div class="form-group">
+                        <label for="TaskOwner">TaskOwner</label>
+                        <input type="text" class="form-control" id="TaskOwner" [(ngModel)]="search.TaskOwner" name="TaskOwner" #TaskOwner="ngModel">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- TABLE -->
+<table class="table mt-40">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">AssignedTo</th>
+            <th scope="col">Comments</th>
+            <th scope="col">DaysAllowed</th>
+            <th scope="col">DueDate</th>
+            <th scope="col">Status</th>
+            <th scope="col">TaskDescription</th>
+            <th scope="col">TaskLink</th>
+            <th scope="col">TaskName</th>
+            <th scope="col">TaskOwner</th>
+            <th>Remove</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of list | search: { 'AssignedTo': search.AssignedTo, 'Comments': search.Comments, 'DaysAllowed': search.DaysAllowed, 'DueDate': search.DueDate, 'Status': search.Status, 'TaskDescription': search.TaskDescription, 'TaskLink': search.TaskLink, 'TaskName': search.TaskName, 'TaskOwner': search.TaskOwner }">
+            <!-- ATTRIBUTES -->
+            <td>
+                <a [routerLink]="['/tasks', item._id]">{{item._id}}</a>
+            </td>
+            <td>{{item.AssignedTo }}</td>
+            <td>{{item.Comments }}</td>
+            <td>{{item.DaysAllowed }}</td>
+            <td>{{item.DueDate | date }}</td>
+            <td>{{item.Status }}</td>
+            <td>{{item.TaskDescription }}</td>
+            <td>{{item.TaskLink }}</td>
+            <td>{{item.TaskName }}</td>
+            <td>{{item.TaskOwner }}</td>
+
+            <!-- DELETE BUTTON -->
+            <td>
+                <button class="btn btn-danger text-center" data-toggle="modal" data-target="#deleteModal" (click)="selectId(item._id)">
+                    <span>
+                        <i class="fa fa-trash"></i>
+                    </span>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+    <div class="no-result" *ngIf="(list | search: {   'AssignedTo': search.AssignedTo ,  'Comments': search.Comments ,  'DaysAllowed': search.DaysAllowed ,  'DueDate': search.DueDate ,  'Status': search.Status ,  'TaskDescription': search.TaskDescription ,  'TaskLink': search.TaskLink ,  'TaskName': search.TaskName ,  'TaskOwner': search.TaskOwner  }).length == 0">
+        No items found
+    </div>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    <i class="fa fa-times-circle"></i>&nbsp;&nbsp;Delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Do you want remove item?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">NO</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="deleteItem()">YES</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- BUTTON -->
+<button class="btn btn-primary text-center pull-right mb-20" routerLink="/tasks/new">
+    <span>
+        <i class="fa fa-plus"></i>
+    </span>
+</button>
+
+<div class="clearfix"></div>

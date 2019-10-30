@@ -1,0 +1,135 @@
+<!-- TITLE -->
+<div class="mb-40 mt-40">
+    <h1>CandidateNotification List</h1>
+</div>
+
+<!-- SEARCH FORM -->
+<div class="card">
+
+    <div class="card-header">
+        <i class="fa fa-search"></i> Search
+    </div>
+    <div class="card-body">
+        <form #searchForm="ngForm">
+            <div class="row justify-content-md-center">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label for="CandidateId">CandidateId</label>
+                        <input type="text" class="form-control" id="CandidateId" [(ngModel)]="search.CandidateId" name="CandidateId" #CandidateId="ngModel">
+                    </div>
+                    <div class="form-group">
+                        <label for="Email">Email</label>
+                        <input type="text" class="form-control" id="Email" [(ngModel)]="search.Email" name="Email" #Email="ngModel">
+                    </div>
+                    <div class="form-group">
+                        <label for="Message">Message</label>
+                        <input type="text" class="form-control" id="Message" [(ngModel)]="search.Message" name="Message" #Message="ngModel">
+                    </div>
+                    <div class="form-group">
+                        <label for="Method">Method</label>
+                        <input type="text" class="form-control" id="Method" [(ngModel)]="search.Method" name="Method" #Method="ngModel">
+                    </div>
+                    <div class="form-group">
+                        <label for="Phone">Phone</label>
+                        <input type="text" class="form-control" id="Phone" [(ngModel)]="search.Phone" name="Phone" #Phone="ngModel">
+                    </div>
+                    <div class="form-group">
+                        <label for="SendDate">SendDate</label>
+                        <input type="date" class="form-control" id="SendDate" [(ngModel)]="search.SendDate" name="SendDate" #SendDate="ngModel">
+                    </div>
+                    <div class="form-group">
+                        <label for="Status">Status</label>
+                        <input type="text" class="form-control" id="Status" [(ngModel)]="search.Status" name="Status" #Status="ngModel">
+                    </div>
+                    <div class="form-group">
+                        <label for="Title">Title</label>
+                        <input type="text" class="form-control" id="Title" [(ngModel)]="search.Title" name="Title" #Title="ngModel">
+                    </div>
+                    <div class="form-group">
+                        <label for="Type">Type</label>
+                        <input type="text" class="form-control" id="Type" [(ngModel)]="search.Type" name="Type" #Type="ngModel">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- TABLE -->
+<table class="table mt-40">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">CandidateId</th>
+            <th scope="col">Email</th>
+            <th scope="col">Message</th>
+            <th scope="col">Method</th>
+            <th scope="col">Phone</th>
+            <th scope="col">SendDate</th>
+            <th scope="col">Status</th>
+            <th scope="col">Title</th>
+            <th scope="col">Type</th>
+            <th>Remove</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of list | search: { 'CandidateId': search.CandidateId, 'Email': search.Email, 'Message': search.Message, 'Method': search.Method, 'Phone': search.Phone, 'SendDate': search.SendDate, 'Status': search.Status, 'Title': search.Title, 'Type': search.Type }">
+            <!-- ATTRIBUTES -->
+            <td>
+                <a [routerLink]="['/candidatenotifications', item._id]">{{item._id}}</a>
+            </td>
+            <td>{{item.CandidateId }}</td>
+            <td>{{item.Email }}</td>
+            <td>{{item.Message }}</td>
+            <td>{{item.Method }}</td>
+            <td>{{item.Phone }}</td>
+            <td>{{item.SendDate | date }}</td>
+            <td>{{item.Status }}</td>
+            <td>{{item.Title }}</td>
+            <td>{{item.Type }}</td>
+
+            <!-- DELETE BUTTON -->
+            <td>
+                <button class="btn btn-danger text-center" data-toggle="modal" data-target="#deleteModal" (click)="selectId(item._id)">
+                    <span>
+                        <i class="fa fa-trash"></i>
+                    </span>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+    <div class="no-result" *ngIf="(list | search: {   'CandidateId': search.CandidateId ,  'Email': search.Email ,  'Message': search.Message ,  'Method': search.Method ,  'Phone': search.Phone ,  'SendDate': search.SendDate ,  'Status': search.Status ,  'Title': search.Title ,  'Type': search.Type  }).length == 0">
+        No items found
+    </div>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    <i class="fa fa-times-circle"></i>&nbsp;&nbsp;Delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Do you want remove item?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">NO</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="deleteItem()">YES</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- BUTTON -->
+<button class="btn btn-primary text-center pull-right mb-20" routerLink="/candidatenotifications/new">
+    <span>
+        <i class="fa fa-plus"></i>
+    </span>
+</button>
+
+<div class="clearfix"></div>

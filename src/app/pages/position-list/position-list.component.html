@@ -1,0 +1,153 @@
+<!-- TITLE -->
+<div class="mb-40 mt-40">
+    <h1>Position List</h1>
+</div>
+
+<!-- SEARCH FORM -->
+<div class="card">
+
+    <div class="card-header">
+        <i class="fa fa-search"></i> Search
+    </div>
+    <div class="card-body">
+        <form #searchForm="ngForm">
+            <div class="row justify-content-md-center">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label for="EssentialFunctions">EssentialFunctions</label>
+                        <input type="text" class="form-control" id="EssentialFunctions" [(ngModel)]="search.EssentialFunctions" name="EssentialFunctions" #EssentialFunctions="ngModel">
+                    </div>
+                    <div class="form-group">
+                        <label for="FAQ">FAQ</label>
+                        <input type="text" class="form-control" id="FAQ" [(ngModel)]="search.FAQ" name="FAQ" #FAQ="ngModel">
+                    </div>
+                    <div class="form-group">
+                        <label for="HealthScreening">HealthScreening</label>
+                        <input type="text" class="form-control" id="HealthScreening" [(ngModel)]="search.HealthScreening" name="HealthScreening" #HealthScreening="ngModel">
+                    </div>
+                    <div class="form-group">
+                        <label for="HiringManager">HiringManager</label>
+                        <input type="text" class="form-control" id="HiringManager" [(ngModel)]="search.HiringManager" name="HiringManager" #HiringManager="ngModel">
+                    </div>
+                    <div class="form-group">
+                        <label for="Images">Images</label>
+                        <input type="text" class="form-control" id="Images" [(ngModel)]="search.Images" name="Images" #Images="ngModel">
+                    </div>
+                    <div class="form-group">
+                        <label for="JobDescription">JobDescription</label>
+                        <input type="text" class="form-control" id="JobDescription" [(ngModel)]="search.JobDescription" name="JobDescription" #JobDescription="ngModel">
+                    </div>
+                    <div class="form-group">
+                        <label for="PositionName">PositionName</label>
+                        <input type="text" class="form-control" id="PositionName" [(ngModel)]="search.PositionName" name="PositionName" #PositionName="ngModel">
+                    </div>
+                    <div class="form-group">
+                        <label for="Requirements">Requirements</label>
+                        <input type="text" class="form-control" id="Requirements" [(ngModel)]="search.Requirements" name="Requirements" #Requirements="ngModel">
+                    </div>
+                    <div class="form-group">
+                        <label for="Screening">Screening</label>
+                        <input type="text" class="form-control" id="Screening" [(ngModel)]="search.Screening" name="Screening" #Screening="ngModel">
+                    </div>
+                    <div class="form-group">
+                        <label for="StartDate">StartDate</label>
+                        <input type="date" class="form-control" id="StartDate" [(ngModel)]="search.StartDate" name="StartDate" #StartDate="ngModel">
+                    </div>
+                    <div class="form-group">
+                        <label for="Status">Status</label>
+                        <input type="text" class="form-control" id="Status" [(ngModel)]="search.Status" name="Status" #Status="ngModel">
+                    </div>
+                    <div class="form-group">
+                        <label for="Videos">Videos</label>
+                        <input type="text" class="form-control" id="Videos" [(ngModel)]="search.Videos" name="Videos" #Videos="ngModel">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- TABLE -->
+<table class="table mt-40">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">EssentialFunctions</th>
+            <th scope="col">FAQ</th>
+            <th scope="col">HealthScreening</th>
+            <th scope="col">HiringManager</th>
+            <th scope="col">Images</th>
+            <th scope="col">JobDescription</th>
+            <th scope="col">PositionName</th>
+            <th scope="col">Requirements</th>
+            <th scope="col">Screening</th>
+            <th scope="col">StartDate</th>
+            <th scope="col">Status</th>
+            <th scope="col">Videos</th>
+            <th>Remove</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of list | search: { 'EssentialFunctions': search.EssentialFunctions, 'FAQ': search.FAQ, 'HealthScreening': search.HealthScreening, 'HiringManager': search.HiringManager, 'Images': search.Images, 'JobDescription': search.JobDescription, 'PositionName': search.PositionName, 'Requirements': search.Requirements, 'Screening': search.Screening, 'StartDate': search.StartDate, 'Status': search.Status, 'Videos': search.Videos }">
+            <!-- ATTRIBUTES -->
+            <td>
+                <a [routerLink]="['/positions', item._id]">{{item._id}}</a>
+            </td>
+            <td>{{item.EssentialFunctions }}</td>
+            <td>{{item.FAQ }}</td>
+            <td>{{item.HealthScreening }}</td>
+            <td>{{item.HiringManager }}</td>
+            <td>{{item.Images }}</td>
+            <td>{{item.JobDescription }}</td>
+            <td>{{item.PositionName }}</td>
+            <td>{{item.Requirements }}</td>
+            <td>{{item.Screening }}</td>
+            <td>{{item.StartDate | date }}</td>
+            <td>{{item.Status }}</td>
+            <td>{{item.Videos }}</td>
+
+            <!-- DELETE BUTTON -->
+            <td>
+                <button class="btn btn-danger text-center" data-toggle="modal" data-target="#deleteModal" (click)="selectId(item._id)">
+                    <span>
+                        <i class="fa fa-trash"></i>
+                    </span>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+    <div class="no-result" *ngIf="(list | search: {   'EssentialFunctions': search.EssentialFunctions ,  'FAQ': search.FAQ ,  'HealthScreening': search.HealthScreening ,  'HiringManager': search.HiringManager ,  'Images': search.Images ,  'JobDescription': search.JobDescription ,  'PositionName': search.PositionName ,  'Requirements': search.Requirements ,  'Screening': search.Screening ,  'StartDate': search.StartDate ,  'Status': search.Status ,  'Videos': search.Videos  }).length == 0">
+        No items found
+    </div>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    <i class="fa fa-times-circle"></i>&nbsp;&nbsp;Delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Do you want remove item?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">NO</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="deleteItem()">YES</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- BUTTON -->
+<button class="btn btn-primary text-center pull-right mb-20" routerLink="/positions/new">
+    <span>
+        <i class="fa fa-plus"></i>
+    </span>
+</button>
+
+<div class="clearfix"></div>

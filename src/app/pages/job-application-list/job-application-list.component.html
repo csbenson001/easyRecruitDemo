@@ -1,0 +1,129 @@
+<!-- TITLE -->
+<div class="mb-40 mt-40">
+    <h1>JobApplication List</h1>
+</div>
+
+<!-- SEARCH FORM -->
+<div class="card">
+
+    <div class="card-header">
+        <i class="fa fa-search"></i> Search
+    </div>
+    <div class="card-body">
+        <form #searchForm="ngForm">
+            <div class="row justify-content-md-center">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label for="ConversionFrom">ConversionFrom</label>
+                        <input type="text" class="form-control" id="ConversionFrom" [(ngModel)]="search.ConversionFrom" name="ConversionFrom" #ConversionFrom="ngModel">
+                    </div>
+                    <div class="form-group">
+                        <label for="DateSubmitted">DateSubmitted</label>
+                        <input type="date" class="form-control" id="DateSubmitted" [(ngModel)]="search.DateSubmitted" name="DateSubmitted" #DateSubmitted="ngModel">
+                    </div>
+                    <div class="form-group">
+                        <label for="Email">Email</label>
+                        <input type="text" class="form-control" id="Email" [(ngModel)]="search.Email" name="Email" #Email="ngModel">
+                    </div>
+                    <div class="form-group">
+                        <label for="FirstName">FirstName</label>
+                        <input type="text" class="form-control" id="FirstName" [(ngModel)]="search.FirstName" name="FirstName" #FirstName="ngModel">
+                    </div>
+                    <div class="form-group ">
+                        <input type="checkbox" [(ngModel)]="search.IsCandidate" name="IsCandidate">
+                        <label>IsCandidate</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="LastName">LastName</label>
+                        <input type="text" class="form-control" id="LastName" [(ngModel)]="search.LastName" name="LastName" #LastName="ngModel">
+                    </div>
+                    <div class="form-group">
+                        <label for="MiddleName">MiddleName</label>
+                        <input type="text" class="form-control" id="MiddleName" [(ngModel)]="search.MiddleName" name="MiddleName" #MiddleName="ngModel">
+                    </div>
+                    <div class="form-group">
+                        <label for="ReferredBy">ReferredBy</label>
+                        <input type="text" class="form-control" id="ReferredBy" [(ngModel)]="search.ReferredBy" name="ReferredBy" #ReferredBy="ngModel">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- TABLE -->
+<table class="table mt-40">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">ConversionFrom</th>
+            <th scope="col">DateSubmitted</th>
+            <th scope="col">Email</th>
+            <th scope="col">FirstName</th>
+            <th scope="col">IsCandidate</th>
+            <th scope="col">LastName</th>
+            <th scope="col">MiddleName</th>
+            <th scope="col">ReferredBy</th>
+            <th>Remove</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of list | search: { 'ConversionFrom': search.ConversionFrom, 'DateSubmitted': search.DateSubmitted, 'Email': search.Email, 'FirstName': search.FirstName, 'IsCandidate': search.IsCandidate, 'LastName': search.LastName, 'MiddleName': search.MiddleName, 'ReferredBy': search.ReferredBy }">
+            <!-- ATTRIBUTES -->
+            <td>
+                <a [routerLink]="['/jobapplications', item._id]">{{item._id}}</a>
+            </td>
+            <td>{{item.ConversionFrom }}</td>
+            <td>{{item.DateSubmitted | date }}</td>
+            <td>{{item.Email }}</td>
+            <td>{{item.FirstName }}</td>
+            <td>{{item.IsCandidate }}</td>
+            <td>{{item.LastName }}</td>
+            <td>{{item.MiddleName }}</td>
+            <td>{{item.ReferredBy }}</td>
+
+            <!-- DELETE BUTTON -->
+            <td>
+                <button class="btn btn-danger text-center" data-toggle="modal" data-target="#deleteModal" (click)="selectId(item._id)">
+                    <span>
+                        <i class="fa fa-trash"></i>
+                    </span>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+    <div class="no-result" *ngIf="(list | search: {   'ConversionFrom': search.ConversionFrom ,  'DateSubmitted': search.DateSubmitted ,  'Email': search.Email ,  'FirstName': search.FirstName ,  'IsCandidate': search.IsCandidate ,  'LastName': search.LastName ,  'MiddleName': search.MiddleName ,  'ReferredBy': search.ReferredBy  }).length == 0">
+        No items found
+    </div>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    <i class="fa fa-times-circle"></i>&nbsp;&nbsp;Delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Do you want remove item?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">NO</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="deleteItem()">YES</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- BUTTON -->
+<button class="btn btn-primary text-center pull-right mb-20" routerLink="/jobapplications/new">
+    <span>
+        <i class="fa fa-plus"></i>
+    </span>
+</button>
+
+<div class="clearfix"></div>

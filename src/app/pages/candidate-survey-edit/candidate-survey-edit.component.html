@@ -1,0 +1,61 @@
+<!-- TITLE -->
+<div class="mb-40 mt-40">
+    <h1>CandidateSurvey Edit</h1>
+</div>
+<div class="card mb-40">
+    <div class="card-header">
+        <i class="fa fa-edit"></i> Edit
+    </div>
+    <div class="card-body">
+        <form #editForm="ngForm" [ngClass]="{'was-validated': formValid!=null}">
+            <div class="row justify-content-md-center">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label for="CandidateId">CandidateId</label>
+                        <input type="text" class="form-control" id="CandidateId" [(ngModel)]="item.CandidateId" name="CandidateId" #CandidateId="ngModel" >
+                    </div>
+                    <div class="form-group">
+                        <label for="Comments">Comments</label>
+                        <input type="text" class="form-control" id="Comments" [(ngModel)]="item.Comments" name="Comments" #Comments="ngModel" >
+                    </div>
+                    <div class="form-group">
+                        <label for="CompletionDate">CompletionDate</label>
+                        <input type="date" class="form-control" id="CompletionDate" [(ngModel)]="item.CompletionDate" name="CompletionDate" #CompletionDate="ngModel" >
+                    </div>
+                    <div class="form-group">
+                        <label for="Response">Response</label>
+                        <input type="text" class="form-control" id="Response" [(ngModel)]="item.Response" name="Response" #Response="ngModel" >
+                    </div>
+                    <div class="form-group">
+                        <label for="Status">Status</label>
+                        <input type="text" class="form-control" id="Status" [(ngModel)]="item.Status" name="Status" #Status="ngModel" >
+                    </div>
+                    <div class="form-group">
+                        <label for="SurveyId">SurveyId</label>
+                        <input type="text" class="form-control" id="SurveyId" [(ngModel)]="item.SurveyId" name="SurveyId" #SurveyId="ngModel" >
+                    </div>
+                    <div class="form-group">
+                        <label for="SurveyQuestions">SurveyQuestions</label>
+                        <input type="text" class="form-control" id="SurveyQuestions" [(ngModel)]="item.SurveyQuestions" name="SurveyQuestions" #SurveyQuestions="ngModel" >
+                    </div>
+                    <!-- RELATIONS -->
+                    <h2 class="mb-20">Relations</h2>
+
+                    <label for="Survey">Survey</label>
+                    <select name="Survey" id="Survey" [(ngModel)]="item.Survey" class="form-control" #Survey="ngModel"  >
+                        <option *ngFor="let item of listSurvey" [value]="item._id">{{item._id}}</option>
+                    </select>
+
+                    
+        
+
+                    <!-- BUTTON BAR -->
+                    <div class="mt-40">
+                        <button class="btn btn-primary pull-right" (click)="save(editForm.valid, item)">Save</button>
+                        <button class="btn btn-secondary pull-right mr-2" (click)="goBack()">Back To List</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

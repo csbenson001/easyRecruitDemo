@@ -1,0 +1,141 @@
+<!-- TITLE -->
+<div class="mb-40 mt-40">
+    <h1>Position Edit</h1>
+</div>
+<div class="card mb-40">
+    <div class="card-header">
+        <i class="fa fa-edit"></i> Edit
+    </div>
+    <div class="card-body">
+        <form #editForm="ngForm" [ngClass]="{'was-validated': formValid!=null}">
+            <div class="row justify-content-md-center">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label for="EssentialFunctions">EssentialFunctions</label>
+                        <input type="text" class="form-control" id="EssentialFunctions" [(ngModel)]="item.EssentialFunctions" name="EssentialFunctions" #EssentialFunctions="ngModel" >
+                    </div>
+                    <div class="form-group">
+                        <label for="FAQ">FAQ</label>
+                        <input type="text" class="form-control" id="FAQ" [(ngModel)]="item.FAQ" name="FAQ" #FAQ="ngModel" >
+                    </div>
+                    <div class="form-group">
+                        <label for="HealthScreening">HealthScreening</label>
+                        <input type="text" class="form-control" id="HealthScreening" [(ngModel)]="item.HealthScreening" name="HealthScreening" #HealthScreening="ngModel" >
+                    </div>
+                    <div class="form-group">
+                        <label for="HiringManager">HiringManager</label>
+                        <input type="text" class="form-control" id="HiringManager" [(ngModel)]="item.HiringManager" name="HiringManager" #HiringManager="ngModel" >
+                    </div>
+                    <div class="form-group">
+                        <label for="Images">Images</label>
+                        <input type="text" class="form-control" id="Images" [(ngModel)]="item.Images" name="Images" #Images="ngModel" >
+                    </div>
+                    <div class="form-group">
+                        <label for="JobDescription">JobDescription</label>
+                        <input type="text" class="form-control" id="JobDescription" [(ngModel)]="item.JobDescription" name="JobDescription" #JobDescription="ngModel" >
+                    </div>
+                    <div class="form-group">
+                        <label for="PositionName">PositionName</label>
+                        <input type="text" class="form-control" id="PositionName" [(ngModel)]="item.PositionName" name="PositionName" #PositionName="ngModel" >
+                    </div>
+                    <div class="form-group">
+                        <label for="Requirements">Requirements</label>
+                        <input type="text" class="form-control" id="Requirements" [(ngModel)]="item.Requirements" name="Requirements" #Requirements="ngModel" >
+                    </div>
+                    <div class="form-group">
+                        <label for="Screening">Screening</label>
+                        <input type="text" class="form-control" id="Screening" [(ngModel)]="item.Screening" name="Screening" #Screening="ngModel" >
+                    </div>
+                    <div class="form-group">
+                        <label for="StartDate">StartDate</label>
+                        <input type="date" class="form-control" id="StartDate" [(ngModel)]="item.StartDate" name="StartDate" #StartDate="ngModel" >
+                    </div>
+                    <div class="form-group">
+                        <label for="Status">Status</label>
+                        <input type="text" class="form-control" id="Status" [(ngModel)]="item.Status" name="Status" #Status="ngModel" >
+                    </div>
+                    <div class="form-group">
+                        <label for="Videos">Videos</label>
+                        <input type="text" class="form-control" id="Videos" [(ngModel)]="item.Videos" name="Videos" #Videos="ngModel" >
+                    </div>
+                    <!-- RELATIONS -->
+                    <h2 class="mb-20">Relations</h2>
+
+                    <div class="pb-30">
+                        <div class="mb-20">
+                            <label>Candidates</label>
+
+                            <span class="dropdown ml-20">
+                                <button class="btn btn-dropdown dropdown-toggle" type="button" id="dropdownMenuButtonCandidates" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                    Add
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonCandidates">
+                                    <button class="dropdown-item" *ngFor="let item of listCandidates" [class.disabled]="containCandidate(item._id)" (click)="$event.preventDefault(); containCandidate(item._id) || addCandidate(item._id)">{{item._id}}
+                                    </button>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="mb-40">
+                            <ul class="list-group">
+                                <li class="list-group-item" *ngIf="!item.candidates || item.candidates.length == 0">No item found</li>
+                                <li class="list-group-item" *ngFor="let obj of item.candidates; let i = index">
+                                    {{obj}}
+
+                                    <button class="btn btn-danger pull-right" type="button" (click)="removeCandidate(i)">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="pb-30">
+                        <div class="mb-20">
+                            <label>TaskLists</label>
+
+                            <span class="dropdown ml-20">
+                                <button class="btn btn-dropdown dropdown-toggle" type="button" id="dropdownMenuButtonTaskLists" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                    Add
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonTaskLists">
+                                    <button class="dropdown-item" *ngFor="let item of listTaskLists" [class.disabled]="containTaskList(item._id)" (click)="$event.preventDefault(); containTaskList(item._id) || addTaskList(item._id)">{{item._id}}
+                                    </button>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="mb-40">
+                            <ul class="list-group">
+                                <li class="list-group-item" *ngIf="!item.tasklists || item.tasklists.length == 0">No item found</li>
+                                <li class="list-group-item" *ngFor="let obj of item.tasklists; let i = index">
+                                    {{obj}}
+
+                                    <button class="btn btn-danger pull-right" type="button" (click)="removeTaskList(i)">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h2 *ngIf="externalCandidate[0] || externalTaskList[0]">External Relations</h2>
+        
+                        <h3 *ngIf="externalCandidate[0]">Candidate</h3>
+                        <ul class="list-group">
+                        <li class="list-group-item" *ngFor="let item of externalCandidate">{{item._id}}</li>
+                        </ul>
+                        <h3 *ngIf="externalTaskList[0]">TaskList</h3>
+                        <ul class="list-group">
+                        <li class="list-group-item" *ngFor="let item of externalTaskList">{{item._id}}</li>
+                        </ul>
+
+                    <!-- BUTTON BAR -->
+                    <div class="mt-40">
+                        <button class="btn btn-primary pull-right" (click)="save(editForm.valid, item)">Save</button>
+                        <button class="btn btn-secondary pull-right mr-2" (click)="goBack()">Back To List</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

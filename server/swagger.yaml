@@ -1,0 +1,2115 @@
+openapi: 3.0.0
+info:
+  title: easyRecruitDemo
+  description: You can obtain JWT token from login API
+  version: 0.1
+servers:
+  - url: http://localhost:3000/api
+    description: Local server for testing
+paths:
+  /login:
+    post:
+      summary: Login API
+      security: []   # No security
+      tags:
+        - Security
+      requestBody:
+        content:
+          application/json:
+            schema:      # Request body contents
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+              example:   # Sample object
+                username: admin
+                password: 62f264d7ad826f02a8af714c0a54b197935b717656b80461686d450f7b3abde4c553541515de2052b9af70f710f0cd8a1a2d3f4d60aa72608d71a63a9a93c0f5
+      responses:
+        '200':
+          description: OK
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+  /verifyToken:
+    post:
+      summary: Verify token API
+      security: [] #No security
+      tags:
+        - Security
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+  /changePassword:
+    post:
+      summary: Change password API
+      tags:
+        - Security
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                passwordNew:
+                  type: string
+                passwordOld:
+                  type: string
+      responses:
+        '200':
+          description: OK
+                
+
+  #-----  Candidate  -----
+  /candidate/:
+    post:
+      summary: CRUD ACTION create
+      tags:
+        - Candidate
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Candidate"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                AppointmentDate:
+                  type: integer
+                AppointmentId:
+                  type: string
+                AppointmentResults:
+                  type: string
+                AppointmentStatus:
+                  type: string
+                ConversionFrom:
+                  type: string
+                DeferReason:
+                  type: string
+                DeferredDate:
+                  type: integer
+                Email:
+                  type: string
+                FirstName:
+                  type: string
+                HireDate:
+                  type: integer
+                Hired:
+                  type: boolean
+                LastName:
+                  type: string
+                MiddleName:
+                  type: string
+                Recruiter:
+                  type: string
+                ReferredBy:
+                  type: string
+                SAPUser:
+                  type: string
+    get:
+      summary: CRUD ACTION list
+      tags:
+        - Candidate
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Candidate"
+    
+  /candidate/{id}:
+    delete:
+      summary: CRUD ACTION delete
+      tags:
+        - Candidate
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    get:
+      summary: CRUD ACTION get
+      tags:
+        - Candidate
+      parameters:
+        - name: id
+          in: path
+          description: Id resource
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Candidate"
+    post:
+      summary: CRUD ACTION update
+      tags:
+        - Candidate
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Candidate"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Candidate"
+    
+  /candidate/findByPositions/{key}:
+    get:
+      summary: CRUD ACTION findByPositions
+      tags:
+        - Candidate
+      parameters:
+        - name: key
+          in: path
+          description: Id della risorsa Positions da cercare
+          required: true
+          schema:
+            type: Objectid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Candidate"
+    
+  #-----  CandidateNotification  -----
+  /notifications/:
+    post:
+      summary: CRUD ACTION create
+      tags:
+        - CandidateNotification
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CandidateNotification"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                CandidateId:
+                  type: string
+                Email:
+                  type: string
+                Message:
+                  type: string
+                Method:
+                  type: string
+                Phone:
+                  type: string
+                SendDate:
+                  type: integer
+                Status:
+                  type: string
+                Title:
+                  type: string
+                Type:
+                  type: string
+    get:
+      summary: CRUD ACTION list
+      tags:
+        - CandidateNotification
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CandidateNotification"
+    
+  /notifications/{id}:
+    delete:
+      summary: CRUD ACTION delete
+      tags:
+        - CandidateNotification
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    get:
+      summary: CRUD ACTION get
+      tags:
+        - CandidateNotification
+      parameters:
+        - name: id
+          in: path
+          description: Id resource
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CandidateNotification"
+    post:
+      summary: CRUD ACTION update
+      tags:
+        - CandidateNotification
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CandidateNotification"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CandidateNotification"
+    
+  /notifications/findByCandidate/{key}:
+    get:
+      summary: CRUD ACTION findByCandidate
+      tags:
+        - CandidateNotification
+      parameters:
+        - name: key
+          in: path
+          description: Id della risorsa Candidate da cercare
+          required: true
+          schema:
+            type: Objectid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CandidateNotification"
+    
+  #-----  CandidateSurvey  -----
+  /candidatesurvey/:
+    post:
+      summary: CRUD ACTION create
+      tags:
+        - CandidateSurvey
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CandidateSurvey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                CandidateId:
+                  type: string
+                Comments:
+                  type: string
+                CompletionDate:
+                  type: integer
+                Response:
+                  type: string
+                Status:
+                  type: string
+                SurveyId:
+                  type: string
+                SurveyQuestions:
+                  type: string
+    get:
+      summary: CRUD ACTION list
+      tags:
+        - CandidateSurvey
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CandidateSurvey"
+    
+  /candidatesurvey/{id}:
+    delete:
+      summary: CRUD ACTION delete
+      tags:
+        - CandidateSurvey
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    get:
+      summary: CRUD ACTION get
+      tags:
+        - CandidateSurvey
+      parameters:
+        - name: id
+          in: path
+          description: Id resource
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CandidateSurvey"
+    post:
+      summary: CRUD ACTION update
+      tags:
+        - CandidateSurvey
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CandidateSurvey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CandidateSurvey"
+    
+  /candidatesurvey/findByCandidate/{key}:
+    get:
+      summary: CRUD ACTION findByCandidate
+      tags:
+        - CandidateSurvey
+      parameters:
+        - name: key
+          in: path
+          description: Id della risorsa Candidate da cercare
+          required: true
+          schema:
+            type: Objectid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CandidateSurvey"
+    
+  /candidatesurvey/findBySurvey/{key}:
+    get:
+      summary: CRUD ACTION findBySurvey
+      tags:
+        - CandidateSurvey
+      parameters:
+        - name: key
+          in: path
+          description: Id della risorsa Survey da cercare
+          required: true
+          schema:
+            type: Objectid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CandidateSurvey"
+    
+  #-----  Document  -----
+  /document/:
+    post:
+      summary: CRUD ACTION create
+      tags:
+        - Document
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Document"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                DocumentName:
+                  type: string
+                DocumentType:
+                  type: string
+                DocumentUrl:
+                  type: string
+    get:
+      summary: CRUD ACTION list
+      tags:
+        - Document
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Document"
+    
+  /document/{id}:
+    delete:
+      summary: CRUD ACTION delete
+      tags:
+        - Document
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    get:
+      summary: CRUD ACTION get
+      tags:
+        - Document
+      parameters:
+        - name: id
+          in: path
+          description: Id resource
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Document"
+    post:
+      summary: CRUD ACTION update
+      tags:
+        - Document
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Document"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Document"
+    
+  /document/findByDocument/{key}:
+    get:
+      summary: CRUD ACTION findByDocument
+      tags:
+        - Document
+      parameters:
+        - name: key
+          in: path
+          description: Id della risorsa Document da cercare
+          required: true
+          schema:
+            type: Objectid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Document"
+    
+  #-----  JobApplication  -----
+  /application/:
+    post:
+      summary: CRUD ACTION create
+      tags:
+        - JobApplication
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JobApplication"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ConversionFrom:
+                  type: string
+                DateSubmitted:
+                  type: integer
+                Email:
+                  type: string
+                FirstName:
+                  type: string
+                IsCandidate:
+                  type: boolean
+                LastName:
+                  type: string
+                MiddleName:
+                  type: string
+                ReferredBy:
+                  type: string
+    get:
+      summary: CRUD ACTION list
+      tags:
+        - JobApplication
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/JobApplication"
+    
+  /application/{id}:
+    delete:
+      summary: CRUD ACTION delete
+      tags:
+        - JobApplication
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    get:
+      summary: CRUD ACTION get
+      tags:
+        - JobApplication
+      parameters:
+        - name: id
+          in: path
+          description: Id resource
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JobApplication"
+    post:
+      summary: CRUD ACTION update
+      tags:
+        - JobApplication
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JobApplication"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/JobApplication"
+    
+  #-----  Position  -----
+  /positions/:
+    post:
+      summary: CRUD ACTION create
+      tags:
+        - Position
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Position"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                EssentialFunctions:
+                  type: string
+                FAQ:
+                  type: string
+                HealthScreening:
+                  type: string
+                HiringManager:
+                  type: string
+                Images:
+                  type: string
+                JobDescription:
+                  type: string
+                PositionName:
+                  type: string
+                Requirements:
+                  type: string
+                Screening:
+                  type: string
+                StartDate:
+                  type: integer
+                Status:
+                  type: string
+                Videos:
+                  type: string
+    get:
+      summary: CRUD ACTION list
+      tags:
+        - Position
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Position"
+    
+  /positions/{id}:
+    delete:
+      summary: CRUD ACTION delete
+      tags:
+        - Position
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    get:
+      summary: CRUD ACTION get
+      tags:
+        - Position
+      parameters:
+        - name: id
+          in: path
+          description: Id resource
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Position"
+    post:
+      summary: CRUD ACTION update
+      tags:
+        - Position
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Position"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Position"
+    
+  /positions/findByCandidates/{key}:
+    get:
+      summary: CRUD ACTION findByCandidates
+      tags:
+        - Position
+      parameters:
+        - name: key
+          in: path
+          description: Id della risorsa Candidates da cercare
+          required: true
+          schema:
+            type: Objectid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Position"
+    
+  /positions/findByTaskList/{key}:
+    get:
+      summary: CRUD ACTION findByTaskList
+      tags:
+        - Position
+      parameters:
+        - name: key
+          in: path
+          description: Id della risorsa TaskList da cercare
+          required: true
+          schema:
+            type: Objectid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Position"
+    
+  /positions/findByTaskLists/{key}:
+    get:
+      summary: CRUD ACTION findByTaskLists
+      tags:
+        - Position
+      parameters:
+        - name: key
+          in: path
+          description: Id della risorsa TaskLists da cercare
+          required: true
+          schema:
+            type: Objectid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Position"
+    
+  #-----  ProcessFlow  -----
+  /processflow/:
+    post:
+      summary: CRUD ACTION create
+      tags:
+        - ProcessFlow
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProcessFlow"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Action:
+                  type: string
+                Completed:
+                  type: boolean
+                NextState:
+                  type: string
+                State:
+                  type: string
+    get:
+      summary: CRUD ACTION list
+      tags:
+        - ProcessFlow
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ProcessFlow"
+    
+  /processflow/{id}:
+    delete:
+      summary: CRUD ACTION delete
+      tags:
+        - ProcessFlow
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    get:
+      summary: CRUD ACTION get
+      tags:
+        - ProcessFlow
+      parameters:
+        - name: id
+          in: path
+          description: Id resource
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProcessFlow"
+    post:
+      summary: CRUD ACTION update
+      tags:
+        - ProcessFlow
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProcessFlow"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProcessFlow"
+    
+  #-----  RolePermission  -----
+  /rolepermissions/:
+    post:
+      summary: CRUD ACTION create
+      tags:
+        - RolePermission
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RolePermission"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Permissions:
+                  type: string
+                RoleName:
+                  type: string
+    get:
+      summary: CRUD ACTION list
+      tags:
+        - RolePermission
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/RolePermission"
+    
+  /rolepermissions/{id}:
+    delete:
+      summary: CRUD ACTION delete
+      tags:
+        - RolePermission
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    get:
+      summary: CRUD ACTION get
+      tags:
+        - RolePermission
+      parameters:
+        - name: id
+          in: path
+          description: Id resource
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RolePermission"
+    post:
+      summary: CRUD ACTION update
+      tags:
+        - RolePermission
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RolePermission"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RolePermission"
+    
+  #-----  Survey  -----
+  /survey/:
+    post:
+      summary: CRUD ACTION create
+      tags:
+        - Survey
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Survey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                SurveyDescription:
+                  type: string
+                SurveyName:
+                  type: string
+                SurveyQuestions:
+                  type: string
+    get:
+      summary: CRUD ACTION list
+      tags:
+        - Survey
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Survey"
+    
+  /survey/{id}:
+    delete:
+      summary: CRUD ACTION delete
+      tags:
+        - Survey
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    get:
+      summary: CRUD ACTION get
+      tags:
+        - Survey
+      parameters:
+        - name: id
+          in: path
+          description: Id resource
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Survey"
+    post:
+      summary: CRUD ACTION update
+      tags:
+        - Survey
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Survey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Survey"
+    
+  #-----  Task  -----
+  /tasks/:
+    post:
+      summary: CRUD ACTION create
+      tags:
+        - Task
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                AssignedTo:
+                  type: string
+                Comments:
+                  type: string
+                DaysAllowed:
+                  type: integer
+                DueDate:
+                  type: integer
+                Status:
+                  type: string
+                TaskDescription:
+                  type: string
+                TaskLink:
+                  type: string
+                TaskName:
+                  type: string
+                TaskOwner:
+                  type: string
+    get:
+      summary: CRUD ACTION list
+      tags:
+        - Task
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Task"
+    
+  /tasks/{id}:
+    delete:
+      summary: CRUD ACTION delete
+      tags:
+        - Task
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    get:
+      summary: CRUD ACTION get
+      tags:
+        - Task
+      parameters:
+        - name: id
+          in: path
+          description: Id resource
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+    post:
+      summary: CRUD ACTION update
+      tags:
+        - Task
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Task"
+    
+  #-----  TaskList  -----
+  /tasklist/:
+    post:
+      summary: CRUD ACTION create
+      tags:
+        - TaskList
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TaskList"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Comments:
+                  type: string
+                TaskDescription:
+                  type: string
+                TaskListName:
+                  type: string
+                TaskName:
+                  type: string
+    get:
+      summary: CRUD ACTION list
+      tags:
+        - TaskList
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TaskList"
+    
+  /tasklist/{id}:
+    delete:
+      summary: CRUD ACTION delete
+      tags:
+        - TaskList
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    get:
+      summary: CRUD ACTION get
+      tags:
+        - TaskList
+      parameters:
+        - name: id
+          in: path
+          description: Id resource
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TaskList"
+    post:
+      summary: CRUD ACTION update
+      tags:
+        - TaskList
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TaskList"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TaskList"
+    
+  /tasklist/findByPositions/{key}:
+    get:
+      summary: CRUD ACTION findByPositions
+      tags:
+        - TaskList
+      parameters:
+        - name: key
+          in: path
+          description: Id della risorsa Positions da cercare
+          required: true
+          schema:
+            type: Objectid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TaskList"
+    
+  #-----  User  -----
+  /user/{id}/changePassword:
+    post:
+      summary: Change password of user from admin
+      tags:
+        - User
+      responses:
+        "200":
+          description: OK
+    
+  /user/:
+    post:
+      summary: CRUD ACTION create
+      tags:
+        - User
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mail:
+                  type: string
+                name:
+                  type: string
+                password:
+                  type: string
+                roles:
+                  type: string
+                surname:
+                  type: string
+                username:
+                  type: string
+    get:
+      summary: CRUD ACTION list
+      tags:
+        - User
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+    
+  /user/{id}:
+    delete:
+      summary: CRUD ACTION delete
+      tags:
+        - User
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    get:
+      summary: CRUD ACTION get
+      tags:
+        - User
+      parameters:
+        - name: id
+          in: path
+          description: Id resource
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+    post:
+      summary: CRUD ACTION update
+      tags:
+        - User
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+    
+  #-----  UserNotification  -----
+  /usernotifications/:
+    post:
+      summary: CRUD ACTION create
+      tags:
+        - UserNotification
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserNotification"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Email:
+                  type: string
+                Message:
+                  type: string
+                Method:
+                  type: string
+                Phone:
+                  type: string
+                SendDate:
+                  type: integer
+                Status:
+                  type: string
+                Title:
+                  type: string
+                Type:
+                  type: string
+    get:
+      summary: CRUD ACTION list
+      tags:
+        - UserNotification
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UserNotification"
+    
+  /usernotifications/{id}:
+    delete:
+      summary: CRUD ACTION delete
+      tags:
+        - UserNotification
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    get:
+      summary: CRUD ACTION get
+      tags:
+        - UserNotification
+      parameters:
+        - name: id
+          in: path
+          description: Id resource
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserNotification"
+    post:
+      summary: CRUD ACTION update
+      tags:
+        - UserNotification
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserNotification"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserNotification"
+    
+  /usernotifications/findByUser/{key}:
+    get:
+      summary: CRUD ACTION findByUser
+      tags:
+        - UserNotification
+      parameters:
+        - name: key
+          in: path
+          description: Id della risorsa User da cercare
+          required: true
+          schema:
+            type: Objectid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UserNotification"
+    
+    
+  #-----  User  -----
+  /Users/{id}/changePassword:
+    post:
+      summary: Change password by admin API
+      tags:
+        - User
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                passwordNew:
+                  type: string
+                passwordAdmin:
+                  type: string
+      responses:
+        '200':
+          description: OK
+  /Users/{id}:
+    post:
+      summary: Update User API
+      tags:
+        - User
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+    delete:
+      summary: Delete User API
+      tags:
+        - User
+      parameters:
+        - name: id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+  /Users:
+    post:
+      summary: Create User API
+      tags:
+        - User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: 'string'
+                password: 
+                  type: 'string'
+                mail: 
+                  type: 'string'
+                name: 
+                  type: 'string'
+                surname: 
+                  type: 'string'
+                roles: 
+                  type: array
+                  items:
+                    type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+    
+# JWT security
+security:
+  - bearerAuth: [] 
+  
+  
+# Components
+components:
+
+  # Security
+  securitySchemes:
+    bearerAuth:            # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT    # optional, arbitrary value for documentation purposes
+
+  # Data Model
+  schemas:
+    User:
+      properties:
+        username:
+          type: 'string'
+        password: 
+          type: 'string'
+        mail: 
+          type: 'string'
+        name: 
+          type: 'string'
+        surname: 
+          type: 'string'
+        roles: 
+          type: array
+          items:
+            type: string
+      required:
+        - username
+        - password
+        
+
+    Candidate:
+      properties:
+        _id:
+          type: string
+        AppointmentDate:
+          type: integer
+        AppointmentId:
+          type: string
+        AppointmentResults:
+          type: string
+        AppointmentStatus:
+          type: string
+        ConversionFrom:
+          type: string
+        DeferReason:
+          type: string
+        DeferredDate:
+          type: integer
+        Email:
+          type: string
+        FirstName:
+          type: string
+        HireDate:
+          type: integer
+        Hired:
+          type: boolean
+        LastName:
+          type: string
+        MiddleName:
+          type: string
+        Recruiter:
+          type: string
+        ReferredBy:
+          type: string
+        SAPUser:
+          type: string
+      required:
+        -  _id
+      
+    
+    CandidateNotification:
+      properties:
+        _id:
+          type: string
+        CandidateId:
+          type: string
+        Email:
+          type: string
+        Message:
+          type: string
+        Method:
+          type: string
+        Phone:
+          type: string
+        SendDate:
+          type: integer
+        Status:
+          type: string
+        Title:
+          type: string
+        Type:
+          type: string
+      required:
+        -  _id
+      
+    
+    CandidateSurvey:
+      properties:
+        _id:
+          type: string
+        CandidateId:
+          type: string
+        Comments:
+          type: string
+        CompletionDate:
+          type: integer
+        Response:
+          type: string
+        Status:
+          type: string
+        SurveyId:
+          type: string
+        SurveyQuestions:
+          type: string
+      required:
+        -  _id
+      
+    
+    Document:
+      properties:
+        _id:
+          type: string
+        DocumentName:
+          type: string
+        DocumentType:
+          type: string
+        DocumentUrl:
+          type: string
+      required:
+        -  _id
+      
+    
+    JobApplication:
+      properties:
+        _id:
+          type: string
+        ConversionFrom:
+          type: string
+        DateSubmitted:
+          type: integer
+        Email:
+          type: string
+        FirstName:
+          type: string
+        IsCandidate:
+          type: boolean
+        LastName:
+          type: string
+        MiddleName:
+          type: string
+        ReferredBy:
+          type: string
+      required:
+        -  _id
+      
+    
+    Position:
+      properties:
+        _id:
+          type: string
+        EssentialFunctions:
+          type: string
+        FAQ:
+          type: string
+        HealthScreening:
+          type: string
+        HiringManager:
+          type: string
+        Images:
+          type: string
+        JobDescription:
+          type: string
+        PositionName:
+          type: string
+        Requirements:
+          type: string
+        Screening:
+          type: string
+        StartDate:
+          type: integer
+        Status:
+          type: string
+        Videos:
+          type: string
+      required:
+        -  _id
+      
+    
+    ProcessFlow:
+      properties:
+        _id:
+          type: string
+        Action:
+          type: string
+        Completed:
+          type: boolean
+        NextState:
+          type: string
+        State:
+          type: string
+      required:
+        -  _id
+      
+    
+    RolePermission:
+      properties:
+        _id:
+          type: string
+        Permissions:
+          type: string
+        RoleName:
+          type: string
+      required:
+        -  _id
+      
+    
+    Survey:
+      properties:
+        _id:
+          type: string
+        SurveyDescription:
+          type: string
+        SurveyName:
+          type: string
+        SurveyQuestions:
+          type: string
+      required:
+        -  _id
+      
+    
+    Task:
+      properties:
+        _id:
+          type: string
+        AssignedTo:
+          type: string
+        Comments:
+          type: string
+        DaysAllowed:
+          type: integer
+        DueDate:
+          type: integer
+        Status:
+          type: string
+        TaskDescription:
+          type: string
+        TaskLink:
+          type: string
+        TaskName:
+          type: string
+        TaskOwner:
+          type: string
+      required:
+        -  _id
+      
+    
+    TaskList:
+      properties:
+        _id:
+          type: string
+        Comments:
+          type: string
+        TaskDescription:
+          type: string
+        TaskListName:
+          type: string
+        TaskName:
+          type: string
+      required:
+        -  _id
+      
+    
+    User:
+      properties:
+        _id:
+          type: string
+        mail:
+          type: string
+        name:
+          type: string
+        password:
+          type: string
+        roles:
+          type: string
+        surname:
+          type: string
+        username:
+          type: string
+      required:
+        -  _id
+        - password
+        - username
+      
+    
+    UserNotification:
+      properties:
+        _id:
+          type: string
+        Email:
+          type: string
+        Message:
+          type: string
+        Method:
+          type: string
+        Phone:
+          type: string
+        SendDate:
+          type: integer
+        Status:
+          type: string
+        Title:
+          type: string
+        Type:
+          type: string
+      required:
+        -  _id
+      
+    
